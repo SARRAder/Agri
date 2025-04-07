@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "EndDevice_Command")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Ignore les références Hibernate inutiles
 public class endDevice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,9 +18,15 @@ public class endDevice {
     private int nivBat;
     private List<String> idlocalOutput = new ArrayList<>();
 
-    @OneToMany(mappedBy = "endDevice", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference // Marque cette relation comme la racine
-    private List<Sensor> sensors = new ArrayList<>();
+    private List<String> idSensors = new ArrayList<>();
+
+    public List<String> getIdSensors() {
+        return idSensors;
+    }
+
+    public void setIdSensors(List<String> idSensors) {
+        this.idSensors = idSensors;
+    }
 
     public List<String> getIdlocalOutput() {
         return idlocalOutput;
@@ -55,13 +60,6 @@ public class endDevice {
         this.nivBat = nivBat;
     }
 
-    public List<Sensor> getSensors() {
-        return sensors;
-    }
-
-    public void setSensors(List<Sensor> sensors) {
-        this.sensors = sensors;
-    }
 
     public endDevice() {
     }

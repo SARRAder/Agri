@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "Sensor_Command")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Sensor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,11 +21,15 @@ public class Sensor {
     private int normalThershold;
     private List<String> idlocalOutput = new ArrayList<>();
     private Sensors typeSensor;
+    private String idEndDevice;
 
-    @ManyToOne
-    @JoinColumn(name = "end_device_id") // Clé étrangère dans la table Sensor
-    @JsonBackReference // Empêche la sérialisation de endDevice dans Sensor
-    private endDevice endDevice;
+    public String getIdEndDevice() {
+        return idEndDevice;
+    }
+
+    public void setIdEndDevice(String idEndDevice) {
+        this.idEndDevice = idEndDevice;
+    }
 
     public enum Sensors {
         bme680,
@@ -106,13 +109,6 @@ public class Sensor {
         this.typeSensor = typeSensor;
     }
 
-    public com.Agri.AgriBack.Command.entity.endDevice getEndDevice() {
-        return endDevice;
-    }
-
-    public void setEndDevice(com.Agri.AgriBack.Command.entity.endDevice endDevice) {
-        this.endDevice = endDevice;
-    }
 
     public Sensor() {
     }

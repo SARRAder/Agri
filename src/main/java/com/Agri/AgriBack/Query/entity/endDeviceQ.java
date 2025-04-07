@@ -15,7 +15,7 @@ public class endDeviceQ {
     private String id;
     private String codDevice;
     private int nivBat;
-    private List<Sensor> sensors;
+    private List<String> idSensors = new ArrayList<>();
     private List<String> idlocalOutput = new ArrayList<>();
 
     public List<String> getIdlocalOutput() {
@@ -50,12 +50,12 @@ public class endDeviceQ {
         this.nivBat = nivBat;
     }
 
-    public List<Sensor> getSensors() {
-        return sensors;
+    public List<String> getIdSensors() {
+        return idSensors;
     }
 
-    public void setSensors(List<Sensor> sensors) {
-        this.sensors = sensors;
+    public void setIdSensors(List<String> idSensors) {
+        this.idSensors = idSensors;
     }
 
     public endDeviceQ() {
