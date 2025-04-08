@@ -4,6 +4,7 @@ import com.Agri.AgriBack.Command.entity.Sensor;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -21,14 +22,15 @@ public class SensorQ {
     private int normalThershold;
     private Sensor.Sensors typeSensor;
     private List<String> idlocalOutput = new ArrayList<>();
-    private String idEndDevice;
+    @DBRef
+    private endDeviceQ EndDevice;
 
-    public String getIdEndDevice() {
-        return idEndDevice;
+    public endDeviceQ getEndDevice() {
+        return EndDevice;
     }
 
-    public void setIdEndDevice(String idEndDevice) {
-        this.idEndDevice = idEndDevice;
+    public void setEndDevice(endDeviceQ endDevice) {
+        EndDevice = endDevice;
     }
 
     public List<String> getIdlocalOutput() {

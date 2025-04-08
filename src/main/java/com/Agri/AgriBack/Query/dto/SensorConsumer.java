@@ -7,15 +7,16 @@ import com.Agri.AgriBack.Query.entity.endDeviceQ;
 import com.Agri.AgriBack.Query.repository.SensorQRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-
+@Component
 public class SensorConsumer {
 
     @Autowired
     private SensorQRepo repo;
 
-    @KafkaListener(topics = "Sensor_created", groupId = "Agri-group-1")
+    @KafkaListener(topics = "Sensor_created", groupId = "Agri-group")
     public void consumeCreateEvent(Sensor sensor){
         SensorQ sensorQ = new SensorQ();
         sensorQ.setTypeSensor(sensor.getTypeSensor());
@@ -32,13 +33,13 @@ public class SensorConsumer {
 
     }
 
-    @KafkaListener(topics = "Sensor_deleted", groupId = "Agri-group-1")
+    @KafkaListener(topics = "Sensor_deleted", groupId = "Agri-group")
     public void handleDeleteSensorEvent(Long sensorId) {
         System.out.println("🔹 Événement Kafka reçu pour suppression du capteur ID: " + sensorId);
         repo.deleteById(sensorId.toString());
     }
 
-    @KafkaListener(topics = "Sensor_updated", groupId = "Agri-group-1")
+    @KafkaListener(topics = "Sensor_updated", groupId = "Agri-group")
     public void consumeUpdateEvent(Sensor sensor){
         SensorQ sensorQ = new SensorQ();
         sensorQ.setId(sensor.getId().toString());

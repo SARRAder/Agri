@@ -4,6 +4,7 @@ import com.Agri.AgriBack.Command.entity.Sensor;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class endDeviceQ {
     private String id;
     private String codDevice;
     private int nivBat;
+    @DBRef
     private List<Sensor> sensors;
     private List<String> idlocalOutput = new ArrayList<>();
 

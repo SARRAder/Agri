@@ -26,7 +26,7 @@ public class EndDeviceCController {
         endDevice enddevice = new endDevice();
         enddevice.setCodDevice(device.getCodDevice());
         enddevice.setNivBat(254);
-        enddevice.setSensors(device.getSensors());
+        enddevice.setSensors(new ArrayList<>());
         enddevice.setIdlocalOutput(new ArrayList<>());
         return ResponseEntity.ok(service.createEndDevice(enddevice));
     }
