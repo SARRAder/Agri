@@ -1,14 +1,27 @@
 package com.Agri.AgriBack.Query.entity;
 
 import com.Agri.AgriBack.Command.entity.Sensor;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.Agri.AgriBack.Command.entity.endDevice;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@EqualsAndHashCode(callSuper = true)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @Document(collection = "Sensor")
 public class SensorQ {
     @Id
@@ -21,14 +34,17 @@ public class SensorQ {
     private int normalThershold;
     private Sensor.Sensors typeSensor;
     private List<String> idlocalOutput = new ArrayList<>();
-    private String idEndDevice;
+    //@JsonIgnore
+    @DBRef
+    private endDeviceQ endDevice;
 
-    public String getIdEndDevice() {
-        return idEndDevice;
+
+    public endDeviceQ getEndDevice() {
+        return endDevice;
     }
 
-    public void setIdEndDevice(String idEndDevice) {
-        this.idEndDevice = idEndDevice;
+    public void setEndDevice(endDeviceQ endDevice) {
+        this.endDevice = endDevice;
     }
 
     public List<String> getIdlocalOutput() {

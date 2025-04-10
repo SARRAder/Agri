@@ -17,5 +17,6 @@ public class EndDeviceQService {
 
     public List<endDeviceQ> getAllDevices() {
         return repo.findAll();
+        //return repo.findAllWithSensors();
     }
 }

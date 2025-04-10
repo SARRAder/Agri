@@ -1,15 +1,22 @@
 package com.Agri.AgriBack.Command.entity;
 
 import com.Agri.AgriBack.Query.entity.SensorQ;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "EndDevice_Command")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Ignore les références Hibernate inutiles
+//@EqualsAndHashCode(exclude = { "sensors"}) // This,
+//@ToString(exclude = { "sensors"})
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class endDevice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,14 +25,18 @@ public class endDevice {
     private int nivBat;
     private List<String> idlocalOutput = new ArrayList<>();
 
-    private List<String> idSensors = new ArrayList<>();
+    //@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+    //@JsonManagedReference // Marque cette relation comme la racine
+    @OneToMany(mappedBy = "endDevice", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY )
 
-    public List<String> getIdSensors() {
-        return idSensors;
+    private List<Sensor> sensors = new ArrayList<>();
+    //@JsonIgnore
+    public List<Sensor> getSensors() {
+        return sensors;
     }
 
-    public void setIdSensors(List<String> idSensors) {
-        this.idSensors = idSensors;
+    public void setSensors(List<Sensor> sensors) {
+        this.sensors = sensors;
     }
 
     public List<String> getIdlocalOutput() {

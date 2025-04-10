@@ -1,17 +1,11 @@
 package com.Agri.AgriBack.Command.services;
 
-import com.Agri.AgriBack.Command.dto.ProductCEvent;
+import com.Agri.AgriBack.Command.producer.ProductCEvent;
 import com.Agri.AgriBack.Command.entity.Product;
 import com.Agri.AgriBack.Command.repository.ProductRepo;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.logging.Logger;
 
 @Service("CommandProductService")
 public class ProductService {

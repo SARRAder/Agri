@@ -1,8 +1,7 @@
-package com.Agri.AgriBack.Query.dto;
+package com.Agri.AgriBack.Query.consumer;
 
 import com.Agri.AgriBack.Command.entity.Employee;
 import com.Agri.AgriBack.Query.entity.EmployeeQ;
-import com.Agri.AgriBack.Query.entity.Product;
 import com.Agri.AgriBack.Query.repository.EmployeeQRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

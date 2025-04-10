@@ -1,10 +1,9 @@
 package com.Agri.AgriBack.Command.Controller;
 
-import com.Agri.AgriBack.Command.dto.ProductCEvent;
+import com.Agri.AgriBack.Command.producer.ProductCEvent;
 import com.Agri.AgriBack.Command.entity.Product;
 import com.Agri.AgriBack.Command.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

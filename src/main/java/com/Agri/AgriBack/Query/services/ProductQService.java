@@ -1,13 +1,11 @@
 package com.Agri.AgriBack.Query.services;
 
-import com.Agri.AgriBack.Command.dto.ProductCEvent;
-import com.Agri.AgriBack.Query.dto.ProductQEvent;
+import com.Agri.AgriBack.Command.producer.ProductCEvent;
 import com.Agri.AgriBack.Query.entity.Product;
 
 import com.Agri.AgriBack.Query.repository.ProductQRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 

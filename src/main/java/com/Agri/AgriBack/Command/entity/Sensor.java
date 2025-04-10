@@ -1,7 +1,6 @@
 package com.Agri.AgriBack.Command.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -9,6 +8,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "Sensor_Command")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Sensor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,14 +24,18 @@ public class Sensor {
     private int normalThershold;
     private List<String> idlocalOutput = new ArrayList<>();
     private Sensors typeSensor;
-    private String idEndDevice;
+    @ManyToOne
+    //@JsonBackReference
+    @JoinColumn(name = "end_device_id") // Clé étrangère dans la table Sensor
+    //@JsonIgnore
+    private endDevice endDevice;
 
-    public String getIdEndDevice() {
-        return idEndDevice;
+    public com.Agri.AgriBack.Command.entity.endDevice getEndDevice() {
+        return endDevice;
     }
 
-    public void setIdEndDevice(String idEndDevice) {
-        this.idEndDevice = idEndDevice;
+    public void setEndDevice(com.Agri.AgriBack.Command.entity.endDevice endDevice) {
+        this.endDevice = endDevice;
     }
 
     public enum Sensors {

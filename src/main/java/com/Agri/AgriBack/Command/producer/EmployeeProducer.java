@@ -1,4 +1,4 @@
-package com.Agri.AgriBack.Command.dto;
+package com.Agri.AgriBack.Command.producer;
 
 import com.Agri.AgriBack.Command.entity.Employee;
 import lombok.RequiredArgsConstructor;

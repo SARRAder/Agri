@@ -1,11 +1,9 @@
-package com.Agri.AgriBack.Query.dto;
+package com.Agri.AgriBack.Query.consumer;
 
 import com.Agri.AgriBack.Query.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 @Data
 @AllArgsConstructor

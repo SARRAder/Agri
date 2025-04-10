@@ -1,16 +1,12 @@
 package com.Agri.AgriBack.Command.services;
 
-import com.Agri.AgriBack.Command.dto.EndDeviceProducer;
-import com.Agri.AgriBack.Command.entity.Employee;
-import com.Agri.AgriBack.Command.entity.Sensor;
+import com.Agri.AgriBack.Command.producer.EndDeviceProducer;
 import com.Agri.AgriBack.Command.entity.endDevice;
 import com.Agri.AgriBack.Command.repository.SensorCRepo;
 import com.Agri.AgriBack.Command.repository.endDeviceCRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -38,18 +34,18 @@ public class EndDeviceCService {
 
     public void deleteDevice(Long id) {
         if (repo.existsById(id)) {
-            Optional<endDevice> optionalDevice = repo.findById(id);
+           /* Optional<endDevice> optionalDevice = repo.findById(id);
             if (optionalDevice.isPresent()) {
                 endDevice device = optionalDevice.get();
-                for (String sensorIdStr : device.getIdSensors()) {
+                for (Sensor sensor : device.getSensors()) {
                     try {
-                        Long sensorId = Long.parseLong(sensorIdStr);
+                        Long sensorId = Long.parseLong(sensor.getId());
                         sensorRepo.deleteById(sensorId);
                     } catch (NumberFormatException e) {
                         System.err.println("ID capteur non valide : " + sensorIdStr);
                     }
                 }
-            }
+            }*/
                 repo.deleteById(id);
                 producer.deleteEndDeviceEvent(id); // Publier l'événement Kafka
 

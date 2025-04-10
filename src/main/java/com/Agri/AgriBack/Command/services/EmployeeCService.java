@@ -1,6 +1,6 @@
 package com.Agri.AgriBack.Command.services;
 
-import com.Agri.AgriBack.Command.dto.EmployeeProducer;
+import com.Agri.AgriBack.Command.producer.EmployeeProducer;
 import com.Agri.AgriBack.Command.entity.Employee;
 import com.Agri.AgriBack.Command.repository.EmployeeCRepo;
 import lombok.AllArgsConstructor;

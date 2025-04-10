@@ -1,6 +1,5 @@
-package com.Agri.AgriBack.Command.dto;
+package com.Agri.AgriBack.Command.producer;
 
-import com.Agri.AgriBack.Command.entity.Employee;
 import com.Agri.AgriBack.Command.entity.endDevice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
