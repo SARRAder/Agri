@@ -1,10 +1,7 @@
 package com.Agri.AgriBack.Command.entity;
 
-import com.Agri.AgriBack.Query.entity.SensorQ;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,21 +13,50 @@ import java.util.List;
 //@ToString(exclude = { "sensors"})
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "id", scope = endDevice.class)
 public class endDevice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String codDevice;
     private int nivBat;
-    private List<String> idlocalOutput = new ArrayList<>();
+    private TypeDev type;
+    @Embedded
+    private DeviceConfig config;   /// orphanRemoval = true
+    @OneToMany(mappedBy = "device",  cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY, orphanRemoval = false )
+    private List<Actuator> localActuators = new ArrayList<>();
 
     //@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
-    //@JsonManagedReference // Marque cette relation comme la racine
-    @OneToMany(mappedBy = "endDevice", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY )
-
+    @OneToMany(mappedBy = "endDevice",  cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY, orphanRemoval = false)
+    //@JsonIgnoreProperties({"sensors"})
     private List<Sensor> sensors = new ArrayList<>();
-    //@JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "greenHouse_id")
+    private GreenHouse serre;
+
+    public enum TypeDev {
+        STM32,
+        LoRa_E5,
+        ESP32,
+        Arduino
+    }
+
+    public TypeDev getType() {
+        return type;
+    }
+
+    public void setType(TypeDev type) {
+        this.type = type;
+    }
+
+    public DeviceConfig getConfig() {
+        return config;
+    }
+
+    public void setConfig(DeviceConfig config) {
+        this.config = config;
+    }
+
     public List<Sensor> getSensors() {
         return sensors;
     }
@@ -39,12 +65,12 @@ public class endDevice {
         this.sensors = sensors;
     }
 
-    public List<String> getIdlocalOutput() {
-        return idlocalOutput;
+    public List<Actuator> getLocalOutput() {
+        return localActuators;
     }
 
-    public void setIdlocalOutput(List<String> idlocalOutput) {
-        this.idlocalOutput = idlocalOutput;
+    public void setLocalOutput(List<Actuator> localOutput) {
+        this.localActuators = localOutput;
     }
 
     public Long getId() {
@@ -71,6 +97,21 @@ public class endDevice {
         this.nivBat = nivBat;
     }
 
+    public List<Actuator> getLocalActuators() {
+        return localActuators;
+    }
+
+    public void setLocalActuators(List<Actuator> localActuators) {
+        this.localActuators = localActuators;
+    }
+
+    public GreenHouse getSerre() {
+        return serre;
+    }
+
+    public void setSerre(GreenHouse serre) {
+        this.serre = serre;
+    }
 
     public endDevice() {
     }

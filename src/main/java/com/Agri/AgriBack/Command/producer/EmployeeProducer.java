@@ -1,6 +1,7 @@
 package com.Agri.AgriBack.Command.producer;
 
 import com.Agri.AgriBack.Command.entity.Employee;
+import com.Agri.AgriBack.DTO.EmployeeDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -8,17 +9,23 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class EmployeeProducer {
-    private final KafkaTemplate<String, Employee> kafkaTemplate;
+    private final KafkaTemplate<String, EmployeeDTO> kafkaTemplate;
+    private final KafkaTemplate<String, Long> kafkaTemplateLong;
 
-    public void createEmployeeEvent(Employee employee) {
+    public void createEmployeeEvent(EmployeeDTO employee) {
         kafkaTemplate.send("Employee_created", employee);
     }
 
-    public void updateEmployeeEvent(Employee employee) {
+    public void updateEmployeeEvent(EmployeeDTO employee) {
         kafkaTemplate.send("Employee_updated", employee);
     }
 
-    public EmployeeProducer(KafkaTemplate<String, Employee> kafkaTemplate) {
+    public void deleteEmployeeEvent(Long id) {
+        kafkaTemplateLong.send("Employee_deleted", id);
+    }
+
+    public EmployeeProducer(KafkaTemplate<String, EmployeeDTO> kafkaTemplate, KafkaTemplate<String, Long> kafkaTemplateLong) {
         this.kafkaTemplate = kafkaTemplate;
+        this.kafkaTemplateLong = kafkaTemplateLong;
     }
 }

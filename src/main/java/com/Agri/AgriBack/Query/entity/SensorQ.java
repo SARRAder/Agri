@@ -1,6 +1,7 @@
 package com.Agri.AgriBack.Query.entity;
 
 import com.Agri.AgriBack.Command.entity.Sensor;
+import com.Agri.AgriBack.Command.entity.SensorType;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -21,45 +22,97 @@ import java.util.List;
 @Builder
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "id", scope = SensorQ.class)
 @Document(collection = "Sensor")
 public class SensorQ {
     @Id
     private String id;
-    private int outputValue;
+    private String idU;
     private  int index;
-    private int fctMode;
     private String description;
-    private int alertThershold;
-    private int normalThershold;
-    private Sensor.Sensors typeSensor;
-    private List<String> idlocalOutput = new ArrayList<>();
+    private int alertThersholdD;
+    private int normalThersholdD;
+    private int alertThersholdN;
+    private int normalThersholdN;
+    private float longt;
+    private float lat;
+    //private boolean scheduled;
+    private SensorType typeSensor;
+    @DBRef
+    private List<ActuatorQ> actuators = new ArrayList<>();
     //@JsonIgnore
     @DBRef
-    private endDeviceQ endDevice;
+    private endDeviceQ device;
 
+    /*public boolean isScheduled() {
+        return scheduled;
+    }
+
+    public void setScheduled(boolean scheduled) {
+        this.scheduled = scheduled;
+    }*/
+
+    public int getAlertThersholdN() {
+        return alertThersholdN;
+    }
+
+    public void setAlertThersholdN(int alertThersholdN) {
+        this.alertThersholdN = alertThersholdN;
+    }
+
+    public int getNormalThersholdN() {
+        return normalThersholdN;
+    }
+
+    public void setNormalThersholdN(int normalThersholdN) {
+        this.normalThersholdN = normalThersholdN;
+    }
+
+    public String getIdU() {
+        return idU;
+    }
+
+    public void setIdU(String idU) {
+        this.idU = idU;
+    }
+
+    public float getLongt() {
+        return longt;
+    }
+
+    public void setLongt(float longt) {
+        this.longt = longt;
+    }
+
+    public float getLat() {
+        return lat;
+    }
+
+    public void setLat(float lat) {
+        this.lat = lat;
+    }
+
+    public List<ActuatorQ> getActuators() {
+        return actuators;
+    }
+
+    public void setActuators(List<ActuatorQ> actuators) {
+        this.actuators = actuators;
+    }
 
     public endDeviceQ getEndDevice() {
-        return endDevice;
+        return device;
     }
 
     public void setEndDevice(endDeviceQ endDevice) {
-        this.endDevice = endDevice;
+        this.device = endDevice;
     }
 
-    public List<String> getIdlocalOutput() {
-        return idlocalOutput;
-    }
-
-    public void setIdlocalOutput(List<String> idlocalOutput) {
-        this.idlocalOutput = idlocalOutput;
-    }
-
-    public Sensor.Sensors getTypeSensor() {
+    public SensorType getTypeSensor() {
         return typeSensor;
     }
 
-    public void setTypeSensor(Sensor.Sensors typeSensor) {
+    public void setTypeSensor(SensorType typeSensor) {
         this.typeSensor = typeSensor;
     }
 
@@ -71,28 +124,12 @@ public class SensorQ {
         this.id = id;
     }
 
-    public int getOutputValue() {
-        return outputValue;
-    }
-
-    public void setOutputValue(int outputValue) {
-        this.outputValue = outputValue;
-    }
-
     public int getIndex() {
         return index;
     }
 
     public void setIndex(int index) {
         this.index = index;
-    }
-
-    public int getFctMode() {
-        return fctMode;
-    }
-
-    public void setFctMode(int fctMode) {
-        this.fctMode = fctMode;
     }
 
     public String getDescription() {
@@ -103,20 +140,20 @@ public class SensorQ {
         this.description = description;
     }
 
-    public int getAlertThershold() {
-        return alertThershold;
+    public int getAlertThersholdD() {
+        return alertThersholdD;
     }
 
-    public void setAlertThershold(int alertThershold) {
-        this.alertThershold = alertThershold;
+    public void setAlertThersholdD(int alertThersholdD) {
+        this.alertThersholdD = alertThersholdD;
     }
 
-    public int getNormalThershold() {
-        return normalThershold;
+    public int getNormalThersholdD() {
+        return normalThersholdD;
     }
 
-    public void setNormalThershold(int normalThershold) {
-        this.normalThershold = normalThershold;
+    public void setNormalThersholdD(int normalThersholdD) {
+        this.normalThersholdD = normalThersholdD;
     }
 
     public SensorQ() {

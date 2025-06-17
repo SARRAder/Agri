@@ -19,7 +19,6 @@ public class SensorCController {
 
     @PostMapping
     public ResponseEntity<Sensor> CreateSensor(@RequestBody Sensor sensor){
-        sensor.setOutputValue(0);
         return ResponseEntity.ok(service.CreateSensor(sensor));
     }
 
@@ -34,7 +33,7 @@ public class SensorCController {
     @DeleteMapping("/{id}")
     public String deleteSensor(@PathVariable Long id) {
         service.deleteSensor(id);
-        return "L'appareil avec l'ID " + id + " a été supprimé avec succès.";
+        return "Le capteur avec l'ID " + id + " a été supprimé avec succès.";
     }
 
 }

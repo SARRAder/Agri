@@ -1,6 +1,7 @@
 package com.Agri.AgriBack.Command.producer;
 
 import com.Agri.AgriBack.Command.entity.endDevice;
+import com.Agri.AgriBack.DTO.EndDeviceDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -8,19 +9,19 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class EndDeviceProducer {
-    private final KafkaTemplate<String, endDevice> kafkaTemplate;
+    private final KafkaTemplate<String, EndDeviceDTO> kafkaTemplate;
     private final KafkaTemplate<String, Long> kafkaTemplateLong; // Template pour les IDs
 
-    public EndDeviceProducer(KafkaTemplate<String, endDevice> kafkaTemplate, KafkaTemplate<String, Long> kafkaTemplateLong) {
+    public EndDeviceProducer(KafkaTemplate<String, EndDeviceDTO> kafkaTemplate, KafkaTemplate<String, Long> kafkaTemplateLong) {
         this.kafkaTemplate = kafkaTemplate;
         this.kafkaTemplateLong = kafkaTemplateLong;
     }
 
-    public void createEndDeviceEvent(endDevice device) {
+    public void createEndDeviceEvent(EndDeviceDTO device) {
         kafkaTemplate.send("EndDevice_created", device);
     }
 
-    public void updateEndDeviceEvent(endDevice device) {
+    public void updateEndDeviceEvent(EndDeviceDTO device) {
         kafkaTemplate.send("EndDevice_updated", device);
     }
 

@@ -4,22 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddDevice {
-    private String codDevice;
-    private List<String> idSensors = new ArrayList<>();
+    private DeviceConfig config;
+    private endDevice.TypeDev type;
+    private GreenHouse serre;
 
-    public List<String> getIdSensors() {
-        return idSensors;
+    public GreenHouse getSerre() {
+        return serre;
     }
 
-    public void setIdSensors(List<String> idSensors) {
-        this.idSensors = idSensors;
+    public void setSerre(GreenHouse serre) {
+        this.serre = serre;
     }
 
-    public String getCodDevice() {
-        return codDevice;
+    public endDevice.TypeDev getType() {
+        return type;
     }
 
-    public void setCodDevice(String codDevice) {
-        this.codDevice = codDevice;
+    public void setType(endDevice.TypeDev type) {
+        this.type = type;
     }
+
+    public DeviceConfig getConfig() {
+        return config;
+    }
+
+    public void setConfig(DeviceConfig config) {
+        this.config = config;
+    }
+
 }

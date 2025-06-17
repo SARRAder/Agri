@@ -13,4 +13,6 @@ public interface EndDeviceQRepo extends MongoRepository<endDeviceQ, String> {
             "{ $lookup: { from: 'Sensor', localField: 'sensors', foreignField: '_id', as: 'sensors' } }"
     })
     List<endDeviceQ> findAllWithSensors();
+
+    endDeviceQ findByCodDevice(String codDevice);
 }

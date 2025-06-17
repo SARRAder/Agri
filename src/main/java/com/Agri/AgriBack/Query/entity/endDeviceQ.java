@@ -1,11 +1,8 @@
 package com.Agri.AgriBack.Query.entity;
 
-import com.Agri.AgriBack.Command.entity.Sensor;
+import com.Agri.AgriBack.Command.entity.endDevice;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -18,7 +15,7 @@ import java.util.List;
 @ToString(exclude = { "sensors"})
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "id", scope = endDeviceQ.class)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,10 +26,31 @@ public class endDeviceQ {
     private String id;
     private String codDevice;
     private int nivBat;
+    private DeviceConfigQ config;
+    private endDevice.TypeDev type;
 
     @DBRef
     private List<SensorQ> sensors ;
-    private List<String> idlocalOutput = new ArrayList<>();
+    @DBRef
+    private List<ActuatorQ> localActuators = new ArrayList<>();
+    @DBRef
+    private GreenHouseQ serre;
+
+    public endDevice.TypeDev getType() {
+        return type;
+    }
+
+    public void setType(endDevice.TypeDev type) {
+        this.type = type;
+    }
+
+    public DeviceConfigQ getConfig() {
+        return config;
+    }
+
+    public void setConfig(DeviceConfigQ config) {
+        this.config = config;
+    }
 
     public List<SensorQ> getSensors() {
         return sensors;
@@ -42,12 +60,12 @@ public class endDeviceQ {
         this.sensors = sensors;
     }
 
-    public List<String> getIdlocalOutput() {
-        return idlocalOutput;
+    public List<ActuatorQ> getlocalActuators() {
+        return localActuators;
     }
 
-    public void setIdlocalOutput(List<String> idlocalOutput) {
-        this.idlocalOutput = idlocalOutput;
+    public void setlocalActuators(List<ActuatorQ> localOutput) {
+        this.localActuators = localOutput;
     }
 
     public String getId() {
@@ -72,6 +90,14 @@ public class endDeviceQ {
 
     public void setNivBat(int nivBat) {
         this.nivBat = nivBat;
+    }
+
+    public GreenHouseQ getSerre() {
+        return serre;
+    }
+
+    public void setSerre(GreenHouseQ serre) {
+        this.serre = serre;
     }
 
     public endDeviceQ() {

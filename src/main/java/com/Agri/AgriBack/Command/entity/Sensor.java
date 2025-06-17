@@ -11,24 +11,61 @@ import java.util.List;
 //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "id", scope = Sensor.class)
 public class Sensor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int outputValue;
+    private String idU;
     private  int index;
-    private int fctMode;
     private String description;
-    private int alertThershold;
-    private int normalThershold;
-    private List<String> idlocalOutput = new ArrayList<>();
-    private Sensors typeSensor;
+    private int alertThersholdD;
+    private int normalThersholdD;
+    private int alertThersholdN;
+    private int normalThersholdN;
+    private SensorType typeSensor;
+    private float longt;
+    private float lat;
+    //private boolean scheduled;
+
+
+    @ManyToMany (mappedBy = "sensors",  cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<Actuator> actuators = new ArrayList<>();
     @ManyToOne
-    //@JsonBackReference
     @JoinColumn(name = "end_device_id") // Clé étrangère dans la table Sensor
-    //@JsonIgnore
     private endDevice endDevice;
+
+    /*public boolean isScheduled() {
+        return scheduled;
+    }
+
+    public void setScheduled(boolean scheduled) {
+        this.scheduled = scheduled;
+    }*/
+
+    public String getIdU() {
+        return idU;
+    }
+
+    public void setIdU(String idU) {
+        this.idU = idU;
+    }
+
+    public int getAlertThersholdN() {
+        return alertThersholdN;
+    }
+
+    public void setAlertThersholdN(int alertThersholdN) {
+        this.alertThersholdN = alertThersholdN;
+    }
+
+    public int getNormalThersholdN() {
+        return normalThersholdN;
+    }
+
+    public void setNormalThersholdN(int normalThersholdN) {
+        this.normalThersholdN = normalThersholdN;
+    }
 
     public com.Agri.AgriBack.Command.entity.endDevice getEndDevice() {
         return endDevice;
@@ -38,10 +75,36 @@ public class Sensor {
         this.endDevice = endDevice;
     }
 
+    public List<Actuator> getActuators() {
+        return actuators;
+    }
+
+    public void setActuators(List<Actuator> actuators) {
+        this.actuators = actuators;
+    }
+
     public enum Sensors {
-        bme680,
-        soilMoisture,
-        lightIntensity
+        gaz,
+        humidite,
+        temperature,
+        humSol,
+        lumiere
+    }
+
+    public float getLongt() {
+        return longt;
+    }
+
+    public void setLongt(float longt) {
+        this.longt = longt;
+    }
+
+    public float getLat() {
+        return lat;
+    }
+
+    public void setLat(float lat) {
+        this.lat = lat;
     }
 
     public Long getId() {
@@ -52,36 +115,12 @@ public class Sensor {
         this.id = id;
     }
 
-    public List<String> getIdlocalOutput() {
-        return idlocalOutput;
-    }
-
-    public void setIdlocalOutput(List<String> idlocalOutput) {
-        this.idlocalOutput = idlocalOutput;
-    }
-
-    public int getOutputValue() {
-        return outputValue;
-    }
-
-    public void setOutputValue(int outputValue) {
-        this.outputValue = outputValue;
-    }
-
     public int getIndex() {
         return index;
     }
 
     public void setIndex(int index) {
         this.index = index;
-    }
-
-    public int getFctMode() {
-        return fctMode;
-    }
-
-    public void setFctMode(int fctMode) {
-        this.fctMode = fctMode;
     }
 
     public String getDescription() {
@@ -92,27 +131,27 @@ public class Sensor {
         this.description = description;
     }
 
-    public int getAlertThershold() {
-        return alertThershold;
+    public int getAlertThersholdD() {
+        return alertThersholdD;
     }
 
-    public void setAlertThershold(int alertThershold) {
-        this.alertThershold = alertThershold;
+    public void setAlertThersholdD(int alertThersholdD) {
+        this.alertThersholdD = alertThersholdD;
     }
 
-    public int getNormalThershold() {
-        return normalThershold;
+    public int getNormalThersholdD() {
+        return normalThersholdD;
     }
 
-    public void setNormalThershold(int normalThershold) {
-        this.normalThershold = normalThershold;
+    public void setNormalThersholdD(int normalThersholdD) {
+        this.normalThersholdD = normalThersholdD;
     }
 
-    public Sensors getTypeSensor() {
+    public SensorType getTypeSensor() {
         return typeSensor;
     }
 
-    public void setTypeSensor(Sensors typeSensor) {
+    public void setTypeSensor(SensorType typeSensor) {
         this.typeSensor = typeSensor;
     }
 

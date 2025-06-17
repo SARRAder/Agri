@@ -3,7 +3,10 @@ package com.Agri.AgriBack.Query.entity;
 import com.Agri.AgriBack.Command.entity.Employee;
 
 import jakarta.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 @Document(collection = "Employee")
 public class EmployeeQ {
@@ -16,10 +19,30 @@ public class EmployeeQ {
     private String address;
     private String mobile;
     private Employee.Role role;
+    @DBRef
+    private List<GreenHouseQ> serre;
+    @DBRef
+    private List<FarmQ> ferme;
 
     public enum Role {
         admin,
         farmer
+    }
+
+    public List<GreenHouseQ> getSerre() {
+        return serre;
+    }
+
+    public void setSerre(List<GreenHouseQ> serre) {
+        this.serre = serre;
+    }
+
+    public List<FarmQ> getFerme() {
+        return ferme;
+    }
+
+    public void setFerme(List<FarmQ> ferme) {
+        this.ferme = ferme;
     }
 
     public String getId() {

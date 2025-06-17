@@ -5,10 +5,13 @@ import com.Agri.AgriBack.Command.entity.AuthRequest;
 import com.Agri.AgriBack.Command.entity.Employee;
 import com.Agri.AgriBack.Command.repository.EmployeeCRepo;
 import com.Agri.AgriBack.Command.services.EmployeeCService;
+import com.Agri.AgriBack.Command.services.JwtUtils;
+import com.Agri.AgriBack.DTO.AuthResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,6 +29,8 @@ public class EmployeeContolllerC {
 
     @Autowired
     private EmployeeCRepo employeeRepo;
+    @Autowired
+    private JwtUtils jwtUtil;
     String code;
 
     @PostMapping
@@ -41,11 +46,13 @@ public class EmployeeContolllerC {
         emp.setAddress(employee.getAddress());
         emp.setMobile(employee.getMobile());
         emp.setRole(employee.getRole());
+        emp.setFerme(null);
+        emp.setSerre(null);
         code = empService.generatePassword();  //generation d'un mdp random
         System.out.println("Generated password: " + code);
 
         emp.setPassword(code);
-        empService.sendSimpleEmail(employee.getEmail(), "Password",  code);
+        empService.sendSimpleEmail(employee.getEmail(), "Mot de passe",  code);
         return ResponseEntity.ok(empService.createEmployee(emp));
     }
 
@@ -64,6 +71,19 @@ public class EmployeeContolllerC {
             System.out.println("Authentication failed for: " + auth.getEmail());
             return ResponseEntity.status(401).body("Authentication failed"); // Unauthorized
         }
-        return ResponseEntity.ok(user);
+        final UserDetails userDetails = empService.loadUserByEmail(auth.getEmail());
+        if (userDetails == null) {
+            System.out.println("User details not found for: " + auth.getEmail());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User details not found");
+        }
+        String jwt = jwtUtil.generateToken(userDetails);  //generation du token
+        System.out.println("JWT Token generated: " + jwt);
+        return ResponseEntity.ok(new AuthResponse(jwt, user));  //renvoie du token et l'utilisateur
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable Long id){
+        empService.deleteEmployee(id);
+        return ResponseEntity.ok("Employee with id " + id  +" deleted");
     }
 }

@@ -1,6 +1,7 @@
 package com.Agri.AgriBack.Command.producer;
 
 import com.Agri.AgriBack.Command.entity.Sensor;
+import com.Agri.AgriBack.DTO.SensorDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -9,19 +10,19 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SensorProducer {
 
-    private final KafkaTemplate<String, Sensor> kafkaTemplate;
+    private final KafkaTemplate<String, SensorDTO> kafkaTemplate;
     private final KafkaTemplate<String, Long> kafkaTemplateLong; // Template pour les IDs
 
-    public SensorProducer(KafkaTemplate<String, Sensor> kafkaTemplate, KafkaTemplate<String, Long> kafkaTemplateLong) {
+    public SensorProducer(KafkaTemplate<String, SensorDTO> kafkaTemplate, KafkaTemplate<String, Long> kafkaTemplateLong) {
         this.kafkaTemplate = kafkaTemplate;
         this.kafkaTemplateLong = kafkaTemplateLong;
     }
 
-    public void createSensorEvent(Sensor sensor) {
+    public void createSensorEvent(SensorDTO sensor) {
         kafkaTemplate.send("Sensor_created", sensor);
     }
 
-    public void updateSensorEvent(Sensor sensor) {
+    public void updateSensorEvent(SensorDTO sensor) {
         kafkaTemplate.send("Sensor_updated", sensor);
     }
 

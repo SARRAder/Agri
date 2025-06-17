@@ -3,6 +3,8 @@ package com.Agri.AgriBack.Command.entity;
 import com.Agri.AgriBack.Query.entity.EmployeeQ;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Employee_Command")
 public class Employee {
@@ -17,10 +19,40 @@ public class Employee {
     private String address;
     private String mobile;
     private Role role;
+    @ManyToMany
+    @JoinTable(
+            name = "employee_greenhouses",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "greenhouse_id")
+    )
+    private List<GreenHouse> serre;
+    @ManyToMany
+    @JoinTable(
+            name = "employee_farms",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "farm_id")
+    )
+    private List<Farm> ferme;
+
+    public List<GreenHouse> getSerre() {
+        return serre;
+    }
+
+    public void setSerre(List<GreenHouse> serre) {
+        this.serre = serre;
+    }
+
+    public List<Farm> getFerme() {
+        return ferme;
+    }
+
+    public void setFerme(List<Farm> ferme) {
+        this.ferme = ferme;
+    }
 
     public enum Role {
-        admin,
-        farmer
+        Admin,
+        Agriculteur
     }
 
     public Long getId() {
